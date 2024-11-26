@@ -6,6 +6,12 @@ folder=$(echo $path | awk -F/ '{print $NF}')
 read -p "Port? " port
 read -p "Pk? " pk
 
+#download binary
+[ -d /root/$folder] || mkdir /root/$folder
+cd /root/$folder
+wget https://github.com/Glacier-Labs/node-bootstrap/releases/download/v0.0.2-beta/verifier_linux_amd64
+chmod +x ./verifier_linux_amd64
+
 #create config.yaml
 sudo tee /root/$folder/config.yaml > /dev/null <<EOF
 Http:
@@ -17,12 +23,6 @@ Keystore:
 TEE:
   IpfsURL: "https://greenfield.onebitdev.com/ipfs/"
 EOF
-
-#download binary
-[ -d /root/$folder] || mkdir /root/$folder
-cd /root/$folder
-wget https://github.com/Glacier-Labs/node-bootstrap/releases/download/v0.0.2-beta/verifier_linux_amd64
-chmod +x ./verifier_linux_amd64
 
 sudo tee /etc/systemd/system/$folder.service > /dev/null <<EOF
 [Unit]
