@@ -7,7 +7,10 @@ source ~/.bash_profile
 
 version=$(echo ?)
 service=$(sudo systemctl status $folder --no-pager | grep "active (running)" | wc -l)
-errors=$(cat ~/aethir/log/server.log | grep $(date --utc +%F) | grep -c -E "rror|ERR")
+errors=$(journalctl -u $folder.service --no-hostname -o cat | grep $(date --utc +%F) | grep -c -E "rror|ERR")
+address=$(journalctl -u $folder.service --no-hostname -o cat | grep "Waiting For Your Node" | tail -1 | awk -F "Waiting For Your Node\(" '{print $NF}' | cut -d \) -f 1 )
+url=$(cat /root/$folder/config.yaml | grep Listen | cut -d \" -f 2)
+
 
 status="ok"
 [ $service -ne 1 ] && status="error";message="service not running";
@@ -24,13 +27,15 @@ cat >$json << EOF
        "owner":"$OWNER"
   },
   "fields": {
-        "chain":"arbitrum one",
-        "network":"mainnet",
+        "chain":"opBNB testnet",
+        "network":"testnet",
         "version":"$version",
         "status":"$status",
         "message":"$message",
         "service":$service,
-        "errors":$errors
+        "errors":$errors,
+        "address":"$address",
+        "url":"$url"
   }
 }
 EOF
