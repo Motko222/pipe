@@ -24,12 +24,14 @@ TEE:
   IpfsURL: "https://greenfield.onebitdev.com/ipfs/"
 EOF
 
+#create service
 sudo tee /etc/systemd/system/$folder.service > /dev/null <<EOF
 [Unit]
 Description=$folder
 After=network.target
 [Service]
 User=root
+WorkingDirectory=/root/$folder
 ExecStart=/root/$folder/verifier_linux_amd64
 Restart=always
 RestartSec=30
