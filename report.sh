@@ -11,10 +11,9 @@ errors=$(journalctl -u $folder.service --no-hostname -o cat | grep $(date --utc 
 address=$(journalctl -u $folder.service --no-hostname -o cat | grep "Waiting For Your Node" | tail -1 | awk -F "Waiting For Your Node\(" '{print $NF}' | cut -d \) -f 1 )
 url=$(cat /root/$folder/config.yaml | grep Listen | cut -d \" -f 2)
 
-
 status="ok"
 [ $service -ne 1 ] && status="error";message="service not running";
-[ $errors -gt 0 ] && status="warning";message="errors=$errors";
+[ $errors -gt 20 ] && status="warning";message="errors=$errors";
 
 cat >$json << EOF
 {
