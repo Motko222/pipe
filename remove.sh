@@ -6,4 +6,8 @@ folder=$(echo $path | awk -F/ '{print $NF}')
 read -p "Sure? " c
 case $c in y|Y) ;; *) exit ;; esac
 
-echo ok
+systemctl stop $folder.service
+systemctl disable $folder.service
+rm /etc/systemd/system/$folder.service
+rm /root/$folder
+rm /foot/scripts/$folder
