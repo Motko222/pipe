@@ -9,5 +9,5 @@ case $c in y|Y) ;; *) exit ;; esac
 systemctl stop $folder.service
 systemctl disable $folder.service
 rm /etc/systemd/system/$folder.service
-rm /root/$folder
-rm /foot/scripts/$folder
+rm -r /root/$folder
+rm -r /root/scripts/$folder
