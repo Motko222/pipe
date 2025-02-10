@@ -2,6 +2,8 @@
 
 path=$(cd -- $(dirname -- "${BASH_SOURCE[0]}") && pwd) 
 folder=$(echo $path | awk -F/ '{print $NF}')
+cd $path
+source config
 
 #download binary
 [ -d /root/$folder] || mkdir /root/$folder
@@ -19,12 +21,7 @@ Wants=network-online.target
 [Service]
 User=root
 Group=root
-ExecStart=/root/$folder/pop \
-    --ram=$RAM \
-    --pubKey $WALLET \
-    --max-disk $DISK \
-    --cache-dir /root/$folder/download_cache \
-    --no-prompt
+ExecStart=/root/$folder/pop --ram=$RAM --pubKey $WALLET --max-disk $DISK --cache-dir /root/$folder/download_cache --no-prompt
 Restart=always
 RestartSec=30
 LimitNOFILE=65536
