@@ -6,7 +6,7 @@ cd $path
 source config
 
 #download binary
-[ -d /root/$folder] || mkdir /root/$folder
+[ -d /root/$folder ] || mkdir /root/$folder
 cd /root/$folder
 curl -s -L -o pop "https://dl.pipecdn.app/v0.2.4/pop"
 chmod +x pop
