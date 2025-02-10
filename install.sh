@@ -3,38 +3,41 @@
 path=$(cd -- $(dirname -- "${BASH_SOURCE[0]}") && pwd) 
 folder=$(echo $path | awk -F/ '{print $NF}')
 
-read -p "Port? " port
-read -p "Pk? " pk
+#read -p "Port? " port
+read -p "Solana wallet? " wallet
 
 #download binary
 [ -d /root/$folder] || mkdir /root/$folder
 cd /root/$folder
-wget https://github.com/Glacier-Labs/node-bootstrap/releases/download/v0.0.2-beta/verifier_linux_amd64
-chmod +x ./verifier_linux_amd64
-
-#create config.yaml
-sudo tee /root/$folder/config.yaml > /dev/null <<EOF
-Http:
-  Listen: "127.0.0.1:$port"
-Network: "testnet"
-RemoteBootstrap: "https://glacier-labs.github.io/node-bootstrap/"
-Keystore:
-  PrivateKey: "$pk"
-TEE:
-  IpfsURL: "https://greenfield.onebitdev.com/ipfs/"
-EOF
+curl -L -o pop "https://dl.pipecdn.app/v0.2.4/pop"
+chmod +x pop
+mkdir download_cache
 
 #create service
-sudo tee /etc/systemd/system/$folder.service > /dev/null <<EOF
+sudo tee /etc/systemd/system/$folder.service << 'EOF'
 [Unit]
-Description=$folder
+Description=Pipe POP Node Service
 After=network.target
+Wants=network-online.target
+
 [Service]
 User=root
-WorkingDirectory=/root/$folder
-ExecStart=/root/$folder/verifier_linux_amd64
+Group=root
+ExecStart=/root/$folder/pop \
+    --ram=$RAM \
+    --pubKey $WALLET \
+    --max-disk $DISK \
+    --cache-dir /root/$folder/download_cache \
+    --no-prompt
 Restart=always
-RestartSec=30
+RestartSec=5
+LimitNOFILE=65536
+LimitNPROC=4096
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=$folder
+WorkingDirectory=/root/$folder
+
 [Install]
 WantedBy=multi-user.target
 EOF
