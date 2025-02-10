@@ -8,13 +8,13 @@ source ~/.bash_profile
 source $path/config
 
 cd /root/$folder
-.pop --status > $status
+./pop --status > $status
 
 uptime=$(cat $status | grep "Uptime Score:" | awk '{print $NF}')
 egress=$(cat $status | grep "Egress Score:" | awk '{print $NF}')
 historical=$(cat $status | grep "Historical Score:" | awk '{print $NF}')
 score=$(cat $status | grep "TOTAL SCORE:" | awk '{print $3}')
-version=$(journalctl -u $folder.service --no-hostname -o cat | grep -c -E "You are on version" | tail -1 | awk '{print $NF}')
+version=$(journalctl -u $folder.service --no-hostname -o cat | grep "You are on version" | tail -1 | awk '{print $NF}')
 service=$(sudo systemctl status $folder --no-pager | grep "active (running)" | wc -l)
 errors=$(journalctl -u $folder.service --no-hostname -o cat | grep $(date --utc +%F) | grep -c -E "rror|ERR")
 address=$(journalctl -u $folder.service --no-hostname -o cat | grep "Waiting For Your Node" | tail -1 | awk -F "Waiting For Your Node\(" '{print $NF}' | cut -d \) -f 1 )
