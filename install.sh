@@ -11,8 +11,7 @@ chmod +x pop
 mkdir download_cache
 
 #create service
-sudo tee /etc/systemd/system/$folder.service << 'EOF'
-[Unit]
+printf "[Unit]
 Description=Pipe POP Node Service
 After=network.target
 Wants=network-online.target
@@ -36,8 +35,7 @@ SyslogIdentifier=$folder
 WorkingDirectory=/root/$folder
 
 [Install]
-WantedBy=multi-user.target
-EOF
+WantedBy=multi-user.target" > /etc/systemd/system/$folder.service
 
 sudo systemctl daemon-reload
 sudo systemctl enable $folder
