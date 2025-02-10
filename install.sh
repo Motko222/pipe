@@ -3,9 +3,6 @@
 path=$(cd -- $(dirname -- "${BASH_SOURCE[0]}") && pwd) 
 folder=$(echo $path | awk -F/ '{print $NF}')
 
-#read -p "Port? " port
-read -p "Solana wallet? " wallet
-
 #download binary
 [ -d /root/$folder] || mkdir /root/$folder
 cd /root/$folder
@@ -30,7 +27,7 @@ ExecStart=/root/$folder/pop \
     --cache-dir /root/$folder/download_cache \
     --no-prompt
 Restart=always
-RestartSec=5
+RestartSec=30
 LimitNOFILE=65536
 LimitNPROC=4096
 StandardOutput=journal
