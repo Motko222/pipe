@@ -2,8 +2,8 @@
 
 path=$(cd -- $(dirname -- "${BASH_SOURCE[0]}") && pwd)
 folder=$(echo $path | awk -F/ '{print $NF}')
-json=~/logs/report-$folder
-status=/logs/$folder-status
+json=/root/logs/report-$folder
+status=/root/logs/$folder-status
 source ~/.bash_profile
 source $path/config
 
