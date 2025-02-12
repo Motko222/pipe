@@ -5,10 +5,12 @@ folder=$(echo $path | awk -F/ '{print $NF}')
 cd $path
 source config
 
+url=https://dl.pipecdn.app/v0.2.5/pop
+
 #download binary
 [ -d /root/$folder ] || mkdir /root/$folder
 cd /root/$folder
-curl -s -L -o pop $URL
+curl -s -L -o pop $url
 chmod +x pop
 [ -d download_cache ] || mkdir download_cache
 
