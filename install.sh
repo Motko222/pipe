@@ -8,9 +8,9 @@ source config
 #download binary
 [ -d /root/$folder ] || mkdir /root/$folder
 cd /root/$folder
-curl -s -L -o pop "https://dl.pipecdn.app/v0.2.4/pop"
+curl -s -L -o pop $URL
 chmod +x pop
-mkdir download_cache
+[ -d download_cache ] || mkdir download_cache
 
 #create service
 printf "[Unit]
