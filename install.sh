@@ -10,6 +10,7 @@ url=https://dl.pipecdn.app/v0.2.5/pop
 #download binary
 [ -d /root/$folder ] || mkdir /root/$folder
 cd /root/$folder
+[ -f pop ] && rm pop
 curl -s -L -o pop $url
 chmod +x pop
 [ -d download_cache ] || mkdir download_cache
