@@ -21,7 +21,7 @@ errors=$(journalctl -u $folder.service --no-hostname -o cat | grep $(date --utc 
 address=$(journalctl -u $folder.service --no-hostname -o cat | grep "Waiting For Your Node" | tail -1 | awk -F "Waiting For Your Node\(" '{print $NF}' | cut -d \) -f 1 )
 
 
-status="ok" && message="score=$score"
+status="ok" && message="score=$score ($uptime/$egress/$historical)"
 [ $service -ne 1 ] && status="error" && message="service not running";
 [ $errors -gt 20 ] && status="warning" && message="errors=$errors";
 
