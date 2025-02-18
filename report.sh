@@ -17,7 +17,7 @@ score=$(cat $status | grep "TOTAL SCORE:" | awk '{print $3}')
 node=$(cat $status | grep "Reputation Status for Node:" | awk '{print $NF}')
 version=$(./pop --version | awk '{print $NF}')
 service=$(sudo systemctl status $folder --no-pager | grep "active (running)" | wc -l)
-errors=$(journalctl -u $folder.service --since "1 hour ago" --no-hostname -o cat | grep -c -E "rror|ERR")
+errors=$(journalctl -u $folder.service --since "1 day ago" --no-hostname -o cat | grep -c -E "rror|ERR")
 address=$(journalctl -u $folder.service --no-hostname -o cat | grep "Waiting For Your Node" | tail -1 | awk -F "Waiting For Your Node\(" '{print $NF}' | cut -d \) -f 1 )
 
 
