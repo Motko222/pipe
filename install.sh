@@ -22,6 +22,8 @@ After=network.target
 Wants=network-online.target
 
 [Service]
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+CapabilityBoundingSet=CAP_NET_BIND_SERVICE
 User=root
 Group=root
 ExecStart=/root/$folder/pop --ram=$RAM --pubKey $WALLET --max-disk $DISK --cache-dir /root/$folder/download_cache --no-prompt
