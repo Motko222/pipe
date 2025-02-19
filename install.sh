@@ -5,7 +5,7 @@ folder=$(echo $path | awk -F/ '{print $NF}')
 cd $path
 source config
 
-url=https://dl.pipecdn.app/v0.2.5/pop
+url=https://dl.pipecdn.app/v0.2.8/pop
 
 #download binary
 [ -d /root/$folder ] || mkdir /root/$folder
