@@ -22,8 +22,8 @@ address=$(journalctl -u $folder.service --no-hostname -o cat | grep "Waiting For
 
 
 status="ok" && message="ram=$RAM, score=$score ($uptime/$egress/$historical)"
+[ $errors -gt 100 ] && status="warning" && message="errors=$errors";
 [ $service -ne 1 ] && status="error" && message="service not running";
-[ $errors -gt 20 ] && status="warning" && message="errors=$errors";
 
 cat >$json << EOF
 {
