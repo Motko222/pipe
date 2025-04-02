@@ -26,7 +26,7 @@ AmbientCapabilities=CAP_NET_BIND_SERVICE
 CapabilityBoundingSet=CAP_NET_BIND_SERVICE
 User=root
 Group=root
-ExecStart=/root/$folder/pop --ram=$RAM --pubKey $WALLET --max-disk $DISK --cache-dir /root/$folder/download_cache --no-prompt
+ExecStart=/root/$folder/pop --ram=$RAM --pubKey $WALLET --max-disk $DISK --cache-dir /root/$folder/download_cache --no-prompt --enable-80-443
 Restart=always
 RestartSec=30
 LimitNOFILE=65536
