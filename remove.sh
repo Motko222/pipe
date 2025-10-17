@@ -10,5 +10,9 @@ systemctl stop $folder.service
 systemctl disable $folder.service
 rm /etc/systemd/system/$folder.service
 
+mkdir /root/backup/$folder" folder"
+cp /root/$folder/node_info.json /root/backup/$folder" folder"
 #rm -r /root/$folder
-#rm -r /root/scripts/$folder
+mv -r /root/scripts/$folder /root/backup
+bash /root/scripts/system/influx-delete-id.sh $folder
+
