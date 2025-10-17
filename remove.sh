@@ -13,6 +13,6 @@ rm /etc/systemd/system/$folder.service
 mkdir /root/backup/$folder" folder"
 cp /root/$folder/node_info.json /root/backup/$folder" folder"
 #rm -r /root/$folder
-mv -r /root/scripts/$folder /root/backup
+mv /root/scripts/$folder /root/backup
 bash /root/scripts/system/influx-delete-id.sh $folder
 
